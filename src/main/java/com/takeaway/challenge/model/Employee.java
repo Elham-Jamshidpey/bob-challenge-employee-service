@@ -31,6 +31,10 @@ public class Employee {
     @ManyToOne
     private Department department;
 
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
+    }
+
     public UUID getUuid() {
         return uuid;
     }

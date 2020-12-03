@@ -2,6 +2,7 @@ package com.takeaway.challenge.service;
 
 import com.sun.jdi.request.InvalidRequestStateException;
 import com.takeaway.challenge.command.EmployeeCommand;
+import com.takeaway.challenge.kafka.EmployeeKafkaProducer;
 import com.takeaway.challenge.model.Department;
 import com.takeaway.challenge.model.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +20,21 @@ public class EmployeeBizService {
     @Autowired
     DepartmentBizService departmentBizService;
 
+    @Autowired
+    EmployeeKafkaProducer employeeKafkaProducer;
+
+    private final static String CREATE_TOPIC = "CREATE";
+    private final static String UPDATE_TOPIC = "UPDATE";
+    private final static String DELETE_TOPIC = "DELETE";
+
     public Employee create(EmployeeCommand command) throws InvalidRequestStateException{
         if(command.getMailAddress() == null || command.getMailAddress().isEmpty()) {
             throw new InvalidRequestStateException("EmployeeCommand is not valid.");
         }
         Employee employee = employeeFromCommand(command);
-        return employeeDataService.save(employee);
+        employee = employeeDataService.save(employee);
+        employeeKafkaProducer.produceMessage(CREATE_TOPIC, employee.getUuid().toString());
+        return employee;
     }
 
     public Optional<Employee> findByUuid(UUID employeeUuid) throws InvalidRequestStateException{
@@ -54,8 +64,9 @@ public class EmployeeBizService {
             Optional<Department> departmentOptional = departmentBizService.findByName(command.getDepartmentCommand().getName());
             currentEmployee.setDepartment(departmentOptional.get());
         }
-
-        return employeeDataService.save(currentEmployee);
+        Employee employee = employeeDataService.save(currentEmployee);
+        employeeKafkaProducer.produceMessage(UPDATE_TOPIC, employee.getUuid().toString());
+        return employee;
     }
 
     public void delete(UUID employeeUuid){
@@ -63,6 +74,7 @@ public class EmployeeBizService {
             throw new InvalidRequestStateException("Employee uuid can not be null.");
         }
         employeeDataService.deleteByUuid(employeeUuid);
+        employeeKafkaProducer.produceMessage(DELETE_TOPIC, employeeUuid.toString());
     }
 
     private Employee employeeFromCommand(EmployeeCommand command) {
