@@ -12,7 +12,7 @@ public class DepartmentCommand   {
     return name;
   }
 
-  public boolean validate(){
+  public boolean isValid(){
     if(this.name == null || this.name.isEmpty()){
       return false;
     }

@@ -3,7 +3,6 @@ package com.takeaway.challenge.service;
 import com.sun.jdi.request.InvalidRequestStateException;
 import com.takeaway.challenge.command.DepartmentCommand;
 import com.takeaway.challenge.model.Department;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -15,7 +14,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -29,15 +27,11 @@ public class DepartmentBizServiceTest {
     @MockBean
     private DepartmentDataService departmentDataService;
 
+    @MockBean
     private Department department;
 
-    @Before
-    public void setup(){
-        department = mock(Department.class);
-    }
-
     @Test
-    public void create_happyPath() {
+    public void create_works_fine() {
         //given
         DepartmentCommand command = new DepartmentCommand("Engineering");
         Mockito.when(departmentDataService.create(any(Department.class))).thenReturn(department);
@@ -54,7 +48,7 @@ public class DepartmentBizServiceTest {
     }
 
     @Test(expected = InvalidRequestStateException.class)
-    public void create_Failed_CommandNameIsNull() {
+    public void create_failed_nameIsNull() {
         //given
         DepartmentCommand command = new DepartmentCommand(null);
 
@@ -63,7 +57,7 @@ public class DepartmentBizServiceTest {
     }
 
     @Test(expected = InvalidRequestStateException.class)
-    public void create_Failed_CommandNameIsEmpty() {
+    public void create_failed_nameIsEmpty() {
         //given
         DepartmentCommand command = new DepartmentCommand("");
 

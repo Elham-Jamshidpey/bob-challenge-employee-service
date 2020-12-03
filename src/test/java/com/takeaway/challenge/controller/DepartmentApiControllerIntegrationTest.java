@@ -22,7 +22,7 @@ public class DepartmentApiControllerIntegrationTest {
     private MockMvc mockMvc;
 
     @Test
-    public void createDepartment_happyPath() throws Exception{
+    public void createDepartment_works_fine() throws Exception{
         this.mockMvc.perform(post("/v1/department").contentType(MediaType.APPLICATION_JSON)
                 .content("{\"name\":\"IT\"}")).andDo(print()).andExpect(status().isOk());
     }

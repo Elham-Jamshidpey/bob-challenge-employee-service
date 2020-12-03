@@ -13,7 +13,7 @@ public class DepartmentBizService {
     private DepartmentDataService departmentDataService;
 
     public Department create(DepartmentCommand command) throws InvalidRequestStateException {
-        if(command.validate()) {
+        if(command.isValid()) {
             Department department = new Department();
             department.setName(command.getName());
             return departmentDataService.create(department);
