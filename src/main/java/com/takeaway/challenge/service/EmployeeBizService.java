@@ -2,6 +2,7 @@ package com.takeaway.challenge.service;
 
 import com.sun.jdi.request.InvalidRequestStateException;
 import com.takeaway.challenge.command.EmployeeCommand;
+import com.takeaway.challenge.model.Department;
 import com.takeaway.challenge.model.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,9 @@ public class EmployeeBizService {
 
     @Autowired
     EmployeeDataService employeeDataService;
+
+    @Autowired
+    DepartmentBizService departmentBizService;
 
     public Employee create(EmployeeCommand command) throws InvalidRequestStateException{
         if(command.getMailAddress() == null || command.getMailAddress().isEmpty()) {
@@ -46,7 +50,10 @@ public class EmployeeBizService {
         currentEmployee.setLastName(command.getLastName() != null ? command.getLastName() : currentEmployee.getLastName());
         currentEmployee.setMailAddress(command.getMailAddress() != null && !command.getMailAddress().isEmpty() ? command.getMailAddress() : currentEmployee.getMailAddress());
         currentEmployee.setBirthday(command.getBirthday() != null ? command.getBirthday() : currentEmployee.getBirthday());
-        currentEmployee.setDepartment(command.getDepartment() != null ? command.getDepartment() : currentEmployee.getDepartment());
+        if(command.getDepartmentCommand() != null){
+            Optional<Department> departmentOptional = departmentBizService.findByName(command.getDepartmentCommand().getName());
+            currentEmployee.setDepartment(departmentOptional.get());
+        }
 
         return employeeDataService.save(currentEmployee);
     }
@@ -63,7 +70,8 @@ public class EmployeeBizService {
         employee.setFirstName(command.getFirstName());
         employee.setLastName(command.getLastName());
         employee.setBirthday(command.getBirthday());
-        employee.setDepartment(command.getDepartment());
+        Optional<Department> departmentOptional = departmentBizService.findByName(command.getDepartmentCommand().getName());
+        employee.setDepartment(departmentOptional.orElseGet(null));
         employee.setMailAddress(command.getMailAddress());
         return employee;
     }

@@ -1,7 +1,5 @@
 package com.takeaway.challenge.command;
 
-import com.takeaway.challenge.model.Department;
-
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -17,7 +15,7 @@ public class EmployeeCommand {
 
     private LocalDate birthday;
 
-    private Department department;
+    private DepartmentCommand departmentCommand;
 
     public UUID getUuid() {
         return uuid;
@@ -59,11 +57,11 @@ public class EmployeeCommand {
         this.birthday = birthday;
     }
 
-    public Department getDepartment() {
-        return department;
+    public DepartmentCommand getDepartmentCommand() {
+        return departmentCommand;
     }
 
-    public void setDepartment(Department department) {
-        this.department = department;
+    public void setDepartmentCommand(DepartmentCommand departmentCommand) {
+        this.departmentCommand = departmentCommand;
     }
 }

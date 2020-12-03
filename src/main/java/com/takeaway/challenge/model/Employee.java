@@ -4,6 +4,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
@@ -14,7 +15,7 @@ import java.util.UUID;
 public class Employee {
 
     @Id
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    @GeneratedValue(generator="system-uuid")
     private UUID uuid;
 
     @Column(unique = true)
@@ -74,7 +75,7 @@ public class Employee {
         this.department = department;
     }
 
-    public String getFullName() {
-        return this.firstName.concat(" ").concat(this.lastName);
-    }
+//    public String getFullName() {
+//        return this.firstName.concat(" ").concat(this.lastName);
+//    }
 }

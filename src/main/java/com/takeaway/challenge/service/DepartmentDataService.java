@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class DepartmentDataService {
 
@@ -19,5 +21,9 @@ public class DepartmentDataService {
         department =  repository.save(department);
         log.info("Department with name " + department.getName() + " created successfully.");
         return department;
+    }
+
+    public Optional<Department> findByName(String name) {
+        return repository.findByName(name);
     }
 }

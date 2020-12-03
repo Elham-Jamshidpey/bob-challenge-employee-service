@@ -1,6 +1,7 @@
 package com.takeaway.challenge.service;
 
 import com.sun.jdi.request.InvalidRequestStateException;
+import com.takeaway.challenge.command.DepartmentCommand;
 import com.takeaway.challenge.command.EmployeeCommand;
 import com.takeaway.challenge.model.Department;
 import com.takeaway.challenge.model.Employee;
@@ -33,6 +34,9 @@ public class EmployeeBizServiceTest {
     private EmployeeDataService employeeDataService;
 
     @MockBean
+    private DepartmentBizService departmentBizService;
+
+    @MockBean
     private Employee employee;
 
     @MockBean
@@ -44,6 +48,7 @@ public class EmployeeBizServiceTest {
         EmployeeCommand command = mockEmployeeCommand();
         Employee employee = mockEmployee();
         Mockito.when(employeeDataService.save(any(Employee.class))).thenReturn(employee);
+        Mockito.when(departmentBizService.findByName(any(String.class))).thenReturn(Optional.of(department));
 
         //when
         Employee result = service.create(command);
@@ -100,9 +105,10 @@ public class EmployeeBizServiceTest {
         command.setUuid(UUID.randomUUID());
         command.setFirstName("Elaheh");
         command.setMailAddress("elaheh.jamshidpey@gmail.com");
+        command.setDepartmentCommand(new DepartmentCommand("IT"));
         Mockito.when(employeeDataService.findByUuid(any(UUID.class))).thenReturn(Optional.of(employee));
         Mockito.when(employeeDataService.save(any(Employee.class))).thenReturn(employee);
-
+        Mockito.when(departmentBizService.findByName(any(String.class))).thenReturn(Optional.of(department));
         //when
         Employee result = service.update(command);
 
@@ -170,7 +176,7 @@ public class EmployeeBizServiceTest {
         command.setMailAddress("elham.jamshidpey@gmail.com");
         command.setBirthday(LocalDate.of(1990,12,21));
 
-        command.setDepartment(department);
+        command.setDepartmentCommand(new DepartmentCommand("IT"));
         return command;
     }
 
@@ -191,6 +197,5 @@ public class EmployeeBizServiceTest {
         assertEquals(result.getLastName(),command.getLastName());
         assertEquals(result.getMailAddress(),command.getMailAddress());
         assertEquals(result.getBirthday(),command.getBirthday());
-        assertEquals(result.getDepartment(),command.getDepartment());
     }
 }
