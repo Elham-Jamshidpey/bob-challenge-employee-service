@@ -2,7 +2,7 @@ package com.takeaway.challenge.service;
 
 import com.sun.jdi.request.InvalidRequestStateException;
 import com.takeaway.challenge.command.EmployeeCommand;
-import com.takeaway.challenge.kafka.EmployeeKafkaProducer;
+import com.takeaway.challenge.kafka.EmployeeEventProducer;
 import com.takeaway.challenge.model.Department;
 import com.takeaway.challenge.model.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class EmployeeBizService {
     DepartmentBizService departmentBizService;
 
     @Autowired
-    EmployeeKafkaProducer employeeKafkaProducer;
+    EmployeeEventProducer employeeEventProducer;
 
     private final static String CREATE_TOPIC = "CREATE";
     private final static String UPDATE_TOPIC = "UPDATE";
@@ -33,7 +33,7 @@ public class EmployeeBizService {
         }
         Employee employee = employeeFromCommand(command);
         employee = employeeDataService.save(employee);
-        employeeKafkaProducer.produceMessage(CREATE_TOPIC, employee.getUuid().toString());
+        employeeEventProducer.produceMessage(CREATE_TOPIC, employee.getUuid().toString());
         return employee;
     }
 
@@ -65,7 +65,7 @@ public class EmployeeBizService {
             currentEmployee.setDepartment(departmentOptional.get());
         }
         Employee employee = employeeDataService.save(currentEmployee);
-        employeeKafkaProducer.produceMessage(UPDATE_TOPIC, employee.getUuid().toString());
+        employeeEventProducer.produceMessage(UPDATE_TOPIC, employee.getUuid().toString());
         return employee;
     }
 
@@ -74,7 +74,7 @@ public class EmployeeBizService {
             throw new InvalidRequestStateException("Employee uuid can not be null.");
         }
         employeeDataService.deleteByUuid(employeeUuid);
-        employeeKafkaProducer.produceMessage(DELETE_TOPIC, employeeUuid.toString());
+        employeeEventProducer.produceMessage(DELETE_TOPIC, employeeUuid.toString());
     }
 
     private Employee employeeFromCommand(EmployeeCommand command) {

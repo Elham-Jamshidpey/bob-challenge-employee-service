@@ -3,7 +3,7 @@ package com.takeaway.challenge.service;
 import com.sun.jdi.request.InvalidRequestStateException;
 import com.takeaway.challenge.command.DepartmentCommand;
 import com.takeaway.challenge.command.EmployeeCommand;
-import com.takeaway.challenge.kafka.EmployeeKafkaProducer;
+import com.takeaway.challenge.kafka.EmployeeEventProducer;
 import com.takeaway.challenge.model.Department;
 import com.takeaway.challenge.model.Employee;
 import org.junit.Test;
@@ -38,7 +38,7 @@ public class EmployeeBizServiceTest {
     private DepartmentBizService departmentBizService;
 
     @MockBean
-    EmployeeKafkaProducer employeeKafkaProducer;
+    EmployeeEventProducer employeeEventProducer;
 
     @MockBean
     private Employee employee;

@@ -10,9 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional(propagation = Propagation.REQUIRED)
-public class EmployeeKafkaProducer {
+public class EmployeeEventProducer {
 
-    private static final Logger log = LoggerFactory.getLogger(EmployeeKafkaProducer.class);
+    private static final Logger log = LoggerFactory.getLogger(EmployeeEventProducer.class);
 
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
