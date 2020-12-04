@@ -83,7 +83,7 @@ public class EmployeeBizService {
         employee.setLastName(command.getLastName());
         employee.setBirthday(command.getBirthday());
         Optional<Department> departmentOptional = departmentBizService.findByName(command.getDepartmentCommand().getName());
-        employee.setDepartment(departmentOptional.orElseGet(null));
+        departmentOptional.ifPresent(department -> employee.setDepartment(department));
         employee.setMailAddress(command.getMailAddress());
         return employee;
     }

@@ -1,5 +1,7 @@
 package com.takeaway.challenge.command;
 
+import org.springframework.util.StringUtils;
+
 public class DepartmentCommand   {
 
   private String name;
@@ -13,10 +15,7 @@ public class DepartmentCommand   {
   }
 
   public boolean isValid(){
-    if(this.name == null || this.name.isEmpty()){
-      return false;
-    }
-    return true;
+    return !StringUtils.isEmpty(this.name);
   }
 }
 

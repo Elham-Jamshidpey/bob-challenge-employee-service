@@ -18,42 +18,43 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Generated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.List;
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-12-03T17:19:31.465Z")
+@Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-12-03T17:19:31.465Z")
 
 @Api(value = "employee", description = "the employee API")
 @RequestMapping(value = "/v1")
 public interface EmployeeApi {
 
-    @ApiOperation(value = "Add a new employee to the store", nickname = "addEmployee", notes = "", tags={ "employee", })
+    @ApiOperation(value = "Add a new employee to the store", nickname = "addEmployee", notes = "", tags={ "employees", })
     @ApiResponses(value = { 
         @ApiResponse(code = 405, message = "Invalid input") })
-    @RequestMapping(value = "/employee",
-        produces = { "application/xml", "application/json" }, 
-        consumes = { "application/json", "application/xml" },
+    @RequestMapping(value = "/employees",
+        produces = { "application/json" },
+        consumes = { "application/json" },
         method = RequestMethod.POST)
     ResponseEntity<Void> addEmployee(@ApiParam(value = "Employee object that needs to be added to the system" ,required=true )  @Valid @RequestBody Employee body);
 
 
-    @ApiOperation(value = "Deletes an Employee", nickname = "deleteEmployee", notes = "", tags={ "employee", })
+    @ApiOperation(value = "Deletes an Employee", nickname = "deleteEmployee", notes = "", tags={ "employees", })
     @ApiResponses(value = { 
         @ApiResponse(code = 400, message = "Invalid UUID supplied"),
         @ApiResponse(code = 404, message = "Employee not found") })
-    @RequestMapping(value = "/employee/{employeeUuid}",
-        produces = { "application/xml", "application/json" }, 
+    @RequestMapping(value = "/employees/{employeeUuid}",
+        produces = { "application/json" },
         method = RequestMethod.DELETE)
     ResponseEntity<Void> deleteEmployee(@ApiParam(value = "Employee uuid to delete",required=true) @PathVariable("employeeUuid") String employeeUuid,@ApiParam(value = "" ) @RequestHeader(value="api_key", required=false) String apiKey);
 
 
-    @ApiOperation(value = "Find employee by UUID", nickname = "getEmployeeByUuid", notes = "Returns a single employee", response = Employee.class, tags={ "employee", })
+    @ApiOperation(value = "Find employee by UUID", nickname = "getEmployeeByUuid", notes = "Returns a single employee", response = Employee.class, tags={ "employees", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = Employee.class),
         @ApiResponse(code = 400, message = "Invalid UUID supplied"),
         @ApiResponse(code = 404, message = "Employee not found") })
-    @RequestMapping(value = "/employee/{employeeUuid}",
-        produces = { "application/xml", "application/json" }, 
+    @RequestMapping(value = "/employees/{employeeUuid}",
+        produces = { "application/json" },
         method = RequestMethod.GET)
     ResponseEntity<Employee> getEmployeeByUuid(@ApiParam(value = "UUID of employee to return",required=true) @PathVariable("employeeUuid") String employeeUuid);
 
@@ -63,9 +64,9 @@ public interface EmployeeApi {
         @ApiResponse(code = 400, message = "Invalid UUID supplied"),
         @ApiResponse(code = 404, message = "Employee not found"),
         @ApiResponse(code = 405, message = "Validation exception") })
-    @RequestMapping(value = "/employee",
-        produces = { "application/xml", "application/json" }, 
-        consumes = { "application/json", "application/xml" },
+    @RequestMapping(value = "/employees",
+        produces = { "application/json" },
+        consumes = { "application/json" },
         method = RequestMethod.PUT)
     ResponseEntity<Void> updateEmployee(@ApiParam(value = "Employee object that needs update in system" ,required=true )  @Valid @RequestBody Employee body);
 

@@ -19,7 +19,7 @@ public class DepartmentDataService {
 
     public Department create(Department department) {
         department =  repository.save(department);
-        log.info("Department with name " + department.getName() + " created successfully.");
+        log.debug("Department with name {} created successfully." , department.getName());
         return department;
     }
 

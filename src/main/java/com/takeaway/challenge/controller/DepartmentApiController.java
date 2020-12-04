@@ -13,10 +13,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-12-03T00:57:40.657Z")
+@Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-12-03T00:57:40.657Z")
 
 @Controller
 public class DepartmentApiController implements DepartmentApi {
@@ -30,7 +31,7 @@ public class DepartmentApiController implements DepartmentApi {
 
     private final HttpServletRequest request;
 
-    @org.springframework.beans.factory.annotation.Autowired
+    @Autowired
     public DepartmentApiController(ObjectMapper objectMapper, HttpServletRequest request) {
         this.objectMapper = objectMapper;
         this.request = request;

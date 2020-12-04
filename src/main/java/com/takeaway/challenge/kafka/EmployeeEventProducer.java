@@ -19,7 +19,7 @@ public class EmployeeEventProducer {
 
 
     public void produceMessage(String topic,String message) {
-        log.info(String.format("Producing message -> %s", message));
+        log.debug(String.format("Producing message -> {}", message));
         this.kafkaTemplate.send(topic, message);
     }
 }

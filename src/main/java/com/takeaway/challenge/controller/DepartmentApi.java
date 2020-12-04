@@ -16,19 +16,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.annotation.Generated;
 import javax.validation.Valid;
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-12-03T00:57:40.657Z")
+@Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-12-03T00:57:40.657Z")
 
-@Api(value = "department", description = "the department API")
+@Api(value = "departments", description = "the department API")
 @RequestMapping(value = "/v1")
 public interface DepartmentApi {
 
-    @ApiOperation(value = "Add a new department", nickname = "addDepartment", notes = "", tags={ "department", })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 405, message = "Invalid input") })
-    @RequestMapping(value = "/department",
-        produces = { "application/xml", "application/json" }, 
-        consumes = { "application/json", "application/xml" },
+    @ApiOperation(value = "Add a new department", nickname = "addDepartment", notes = "", tags={ "departments", })
+    @ApiResponses(value = { @ApiResponse(code = 405, message = "Invalid input") })
+    @RequestMapping(value = "/departments",
+        produces = { "application/json" },
+        consumes = { "application/json" },
         method = RequestMethod.POST)
     ResponseEntity<Void> addDepartment(@ApiParam(value = "Department object that needs to be added to the system" ,required=true )  @Valid @RequestBody Department body);
 
